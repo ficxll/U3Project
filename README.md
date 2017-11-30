@@ -8,9 +8,9 @@
 * Pegue o código em C e execute-o em um compilador em C de sua preferencia
 # INSTRUÇÕES DE USO
 * 1 - Limpar todas as matrizes :
-** Opção 1 - Essa opção atribuirá o valor zero a todas as células das matrizes A, B e C
+  ** Opção 1 - Essa opção atribuirá o valor zero a todas as células das matrizes A, B e C
 * 2 - Definir os parametros das Matrizez
-** Opção 2 - 
+  ** Opção 2 - 
   
 
 
