@@ -8,21 +8,9 @@
 * Pegue o código em C e execute-o em um compilador em C de sua preferencia
 # INSTRUÇÕES DE USO
 * 1 - Limpar todas as matrizes :
-*Essa opção atribuirá o valor zero a todas as células das matrizes A, B e C
-
-
-## Safety
-Whatever you send to the proxy chat in game is intercepted client-side. The chat is NOT sent to the server.  
+** Opção 1 - Essa opção atribuirá o valor zero a todas as células das matrizes A, B e C
+* 2 - Definir os parametros das Matrizez
+** Opção 2 - 
   
-## Changelog
-### 1.2.1
-* [*] Some code cleanup
-* [*] Full conversion to Pinkie Pie's command module
-### 1.2.0
-* [+] AFKer will now activate itself after standing still for an hour
-* [*] AFKer is now enabled by default
-* [+] Added support for Pinkie Pie's command module which is now a requirement
-### 1.1.0
-* [+] Added !afk command to toggle between "on" and "off" in non-whisper chats
-### 1.0.0
-* [*] Initial Release
+
+
