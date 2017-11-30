@@ -36,3 +36,5 @@
     [+] Lembre-se, para fazer uma multiplicação entre matrizes, o número de linhas de uma das matrizes deve ser igual ao número de colunas da outra matriz
     [+] O programa analizará e realizará a multiplicação (A*B) ou (B*A) de forma automática. Se as matrizes forem quadradas e com número de linhas e colunas iguais entre sí o usuário poderá escolher entra uma das duas formas de multiplicação.
 ## 6 - A opção [07] do programa encerrará o mesmo.
+## Observações
+    Qualquer valor digitado que não esteja dentro dos valores esperados dentro do programa resultará em uma mensagem informando o que aconteceu e retornará ao menu principal
