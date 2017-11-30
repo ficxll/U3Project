@@ -7,10 +7,10 @@
 # INSTALAÇÃO
 * Pegue o código em C e execute-o em um compilador em C de sua preferencia
 # INSTRUÇÕES DE USO
-* 1 - Limpar as matrizes :
-* 1.1 - A opção 01 do programa atribuirá o valor zero a todas as células das matrizes A, B e C
-* 2 - Definir os parametros das Matrizez
-* Opção 2 - 
+* 1 - Limpar as matrizes :;
+** 1.1 - A opção 01 do programa atribuirá o valor zero a todas as células das matrizes A, B e C;
+* 2 - Definir os parametros das Matrizez:;
+** 2.1 - A opção 02 do programa receberá os dados de uma matriz A especificada pelo usuário;
   
 
 
