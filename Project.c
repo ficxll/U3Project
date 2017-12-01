@@ -3,10 +3,36 @@
 #include <stdlib.h>
 #include <time.h>
 
-int opt, l1, l2, l3, c1, c2, c3;
-float mat1[50][50], mat2[50][50], mat3[50][50];
-int i, j, y, ht1, ht2, ht1s, ht1e, ht2s, ht2e, sm, mm;
-int mat1check, mat2check;
+
+struct matriz_a{ //VARIAVEIS LIGADAS A MATRIZ A
+    float mat1[50][50];
+    int l1;
+    int c1;
+    int ht1;
+    int ht1s;
+    int ht1e;
+    int mat1check;
+};
+
+struct matriz_b{ //VARIAVEIS LIGADAS A MATRIZ B
+    float mat2[50][50];
+    int l2;
+    int c2;
+    int ht2;
+    int ht2s;
+    int ht2e;
+    int mat2check;
+};
+
+struct matriz_c{ //VARIAVEIS LIGADAS A MATRIZ C
+    float mat3[50][50];
+    int l3;
+    int c3;
+};
+
+struct matriz_a mata;
+struct matriz_b matb;
+struct matriz_c matc;
 
 void menu(){                    //ESTRUTURA BASICA DO MENU DO PROGRAMA
     system("cls");
@@ -25,21 +51,22 @@ void menu(){                    //ESTRUTURA BASICA DO MENU DO PROGRAMA
 
 void matclear(){                //ZERA TODAS AS MATRIZES
     /*Atribue 0 a todos os valores da matriz A*/
-    for(i=0; i<l1; i++){
-        for(j=0; j<c1; j++){
-            mat1[i][j]=0;
+    int i, j;
+    for(i=0; i<mata.l1; i++){
+        for(j=0; j<mata.c1; j++){
+            mata.mat1[i][j]=0;
         }
     }
     /*Atribue 0 a todos os valores da matriz B*/
-    for(i=0; i<l2; i++){
-        for(j=0; j<c2; j++){
-            mat2[i][j]=0;
+    for(i=0; i<matb.l2; i++){
+        for(j=0; j<matb.c2; j++){
+            matb.mat2[i][j]=0;
         }
     }
     /*Atribue 0 a todos os valores da matriz resultante C*/
-    for(i=0; i<l3; i++){
-        for(j=0; j<c3; j++){
-            mat3[i][j]=0;
+    for(i=0; i<matc.l3; i++){
+        for(j=0; j<matc.c3; j++){
+            matc.mat3[i][j]=0;
         }
     }
     /*Mostra uma mensagem falando que a operação foi realizada seguida de uma instrução*/
@@ -49,9 +76,10 @@ void matclear(){                //ZERA TODAS AS MATRIZES
 
 void mat1print(){               //FAZ A IMPRESSÃO DA MATRIZ A NA TELA
     printf("==> Matriz A:\n\n");
-    for(i=0; i<l1; i++){
-        for(j=0; j<c1; j++){
-            printf("%.2f ", mat1[i][j]);
+    int i, j;
+    for(i=0; i<mata.l1; i++){
+        for(j=0; j<mata.c1; j++){
+            printf("%.2f ", mata.mat1[i][j]);
         }
         printf("\n");
     }
@@ -59,9 +87,10 @@ void mat1print(){               //FAZ A IMPRESSÃO DA MATRIZ A NA TELA
 
 void mat2print(){               //FAZ A IMPRESSÃO DA MATRIZ B NA TELA
     printf("==> Matriz B:\n\n");
-    for(i=0; i<l2; i++){
-        for(j=0; j<c2; j++){
-            printf("%.2f ", mat2[i][j]);
+    int i, j;
+    for(i=0; i<matb.l2; i++){
+        for(j=0; j<matb.c2; j++){
+            printf("%.2f ", matb.mat2[i][j]);
         }
         printf("\n");
     }
@@ -69,22 +98,23 @@ void mat2print(){               //FAZ A IMPRESSÃO DA MATRIZ B NA TELA
 
 void mat3print(){               //FAZ A IMPRESSÃO DA MATRIZ C NA TELA
     printf("==> Matriz C:\n\n");
-    for(i=0; i<l3; i++){
-        for(j=0; j<c3; j++){
-            printf("%.2f ", mat3[i][j]);
+    int i, j;
+    for(i=0; i<matc.l3; i++){
+        for(j=0; j<matc.c3; j++){
+            printf("%.2f ", matc.mat3[i][j]);
         }
         printf("\n");
     }
 }
 
 void mat1parameters(){          //RECEBE OS DADOS DA MATRIZ A
-    system("cls");
+    int i, j;
     printf("Defina o tamanho da matriz A (Matriz com tamanho igual ou menor que 50x50):\n\n"
            ">Quantidade de linhas:  ");
-    scanf("%d", &l1);                   //RECEBE O NUMERO DE LINHAS DE A
+    scanf("%d", &mata.l1);                   //RECEBE O NUMERO DE LINHAS DE A
     printf(">Quantidade de colunas: ");
-    scanf("%d", &c1);                   //RECEBE O NUMERO DE COLUNAS DE A
-    if(l1>0&&l1<51&&c1>0&&c1<51){
+    scanf("%d", &mata.c1);                   //RECEBE O NUMERO DE COLUNAS DE A
+    if(mata.l1>0&&mata.l1<51&&mata.c1>0&&mata.c1<51){
     /*CASO O NUMERO DE LINHAS E COLUNAS ESTEJA ENTRE O VALOR MIN~MAX PERMITIDO PROSEGUE
       COM O RECEBIMENTO DE DADOS DA MATRIZ A. SE O USUARIO SELECIONAR PARA GERAR VALORES
       RANDOMICOS PARA A MATRIZ A, ELE TEM QUE DETERMINAR EM SEGUIDA A FAIXA DE VALORES
@@ -93,26 +123,26 @@ void mat1parameters(){          //RECEBE OS DADOS DA MATRIZ A
     printf("\nDe qual forma voce deseja preencher a matriz?\n"
            "> 1 - Randomicamente\n"
            "> 2 - Manualmente (Caractere por caractere)\n");
-    scanf("%d", &ht1);
-    if(ht1==1){
+    scanf("%d", &mata.ht1);
+    if(mata.ht1==1){
         printf("Digite a faixa de valores para gerar a os numeros da matriz\n\n");
         printf("Valor inicial:  ");
-        scanf("%d", &ht1s);
+        scanf("%d", &mata.ht1s);
         printf("Valor final:    ");
-        scanf("%d", &ht1e);
+        scanf("%d", &mata.ht1e);
         srand(time(NULL));
-        for(i=0; i<l1; i++){
-            for(j=0; j<c1; j++){
-                mat1[i][j] = ht1s + (rand()%(ht1e - ht1s + 1));
+        for(i=0; i<mata.l1; i++){
+            for(j=0; j<mata.c1; j++){
+                mata.mat1[i][j] = mata.ht1s + (rand()%(mata.ht1e - mata.ht1s + 1));
             }
         }
     }else{
-        if(ht1==2){
+        if(mata.ht1==2){
             printf("Digite os valores da matriz A, um por um:\n\n");
-            for(i=0; i<l1; i++){
-                for(j=0; j<c1; j++){
+            for(i=0; i<mata.l1; i++){
+                for(j=0; j<mata.c1; j++){
                     printf("Linha [%d], Coluna [%d]:    ", i+1, j+1);
-                    scanf("%f", &mat1[i][j]);
+                    scanf("%f", &mata.mat1[i][j]);
                 }
             }
         }else{
@@ -130,12 +160,13 @@ void mat1parameters(){          //RECEBE OS DADOS DA MATRIZ A
 }
 
 void mat2parameters(){          //RECEBE OS DADOS DA MATRIZ B
+    int i, j;
     printf("Defina o tamanho da matriz B (Matriz com tamanho igual ou menor que 50x50):\n\n"
            ">Quantidade de linhas:  ");
-    scanf("%d", &l2);
+    scanf("%d", &matb.l2);
     printf(">Quantidade de colunas: ");
-    scanf("%d", &c2);
-    if(l1>0&&l1<51&&c2>0&&c2<51){
+    scanf("%d", &matb.c2);
+    if(matb.l2>0&&matb.l2<51&&matb.c2>0&&matb.c2<51){
     /*CASO O NUMERO DE LINHAS E COLUNAS ESTEJA ENTRE O VALOR MIN~MAX PERMITIDO PROSEGUE
       COM O RECEBIMENTO DE DADOS DA MATRIZ B. SE O USUARIO SELECIONAR PARA GERAR VALORES
       RANDOMICOS PARA A MATRIZ B, ELE TEM QUE DETERMINAR EM SEGUIDA A FAIXA DE VALORES
@@ -144,26 +175,26 @@ void mat2parameters(){          //RECEBE OS DADOS DA MATRIZ B
     printf("\nDe qual forma voce deseja preencher a matriz?\n"
            "> 1 - Randomicamente\n"
            "> 2 - Manualmente (Caractere por caractere)\n");
-    scanf("%d", &ht2);
-    if(ht2==1){
+    scanf("%d", &matb.ht2);
+    if(matb.ht2==1){
         printf("Digite a faixa de valores para gerar a os numeros da matriz\n\n");
         printf("Valor inicial:  ");
-        scanf("%d", &ht2s);
+        scanf("%d", &matb.ht2s);
         printf("Valor final:    ");
-        scanf("%d", &ht2e);
+        scanf("%d", &matb.ht2e);
         srand(time(NULL));
-        for(i=0; i<l2; i++){
-            for(j=0; j<c2; j++){
-                mat2[i][j] = ht2s + (rand()%(ht2e - ht2s + 1));
+        for(i=0; i<matb.l2; i++){
+            for(j=0; j<matb.c2; j++){
+                matb.mat2[i][j] = matb.ht2s + (rand()%(matb.ht2e - matb.ht2s + 1));
             }
         }
     }else{
-        if(ht2==2){
+        if(matb.ht2==2){
             printf("Digite os valores da matriz B, um por um:\n\n");
-            for(i=0; i<l2; i++){
-                for(j=0; j<c2; j++){
+            for(i=0; i<matb.l2; i++){
+                for(j=0; j<matb.c2; j++){
                     printf("Linha [%d], Coluna [%d]:   ", i+1, j+1);
-                    scanf("%f", &mat2[i][j]);
+                    scanf("%f", &matb.mat2[i][j]);
                 }
             }
         }else{
@@ -181,12 +212,13 @@ void mat2parameters(){          //RECEBE OS DADOS DA MATRIZ B
 
 void matsoma(){                 //FAZ A SOMA DAS MATRIZES
     /*COMPARA AS LINHAS E COLUNAS DE A E B, SE FOREM IGUAIS A SOMA EH FEITA, CASO NÃO SEJA MOSTRA UMA MENSAGEM DE ERRO*/
-    if((l1==l2)&&(c1==c2)){
-        l3=l1;
-        c3=c1;
-        for(i=0; i<l1; i++){
-            for(j=0; j<c1; j++){
-                mat3[i][j] = mat1[i][j] + mat2[i][j];
+    int i, j;
+    if((mata.l1==matb.l2)&&(mata.c1==matb.c2)){
+        matc.l3=mata.l1;
+        matc.c3=mata.c1;
+        for(i=0; i<mata.l1; i++){
+            for(j=0; j<mata.c1; j++){
+                matc.mat3[i][j] = mata.mat1[i][j] + matb.mat2[i][j];
             }
         }
         printf("SOMA DA FORMA (A + B) RESULTANDO UMA MATRIZ C");
@@ -204,15 +236,18 @@ void matsoma(){                 //FAZ A SOMA DAS MATRIZES
 void matsubtracao(){            //FAZ A SUBTRAÇÃO DAS MATRIZES
     /*COMPARA O TAMANHO DAS MATRIZES A E B, CASO SEJAM IGUAIS SERÁ PERGUNTADO DE QUAL FORMA SESEJA REALIZAR A OPERAÇÃO
     A-B=C OU B-A=C*/
-    if((l1==l2)&&(c1==c2)){
+    int sm;
+    int i, j;
+
+    if((mata.l1==matb.l2)&&(mata.c1==matb.c2)){
         printf("De qual forma voce deseja realizar a subtracao?\n"
                "> 1 - (A - B)\n"
                "> 2 - (B - A)\n");
         scanf("%d", &sm);
         if(sm==1){
-            for(i=0; i<l1; i++){
-                for(j=0; j<c1; j++){
-                    mat3[i][j] = mat1[i][j] - mat2[i][j];
+            for(i=0; i<mata.l1; i++){
+                for(j=0; j<mata.c1; j++){
+                    matc.mat3[i][j] = mata.mat1[i][j] - matb.mat2[i][j];
                 }
             }
             printf("SUBTRACAO DA FORMA (A - B) RESULTANDO EM C");
@@ -224,9 +259,9 @@ void matsubtracao(){            //FAZ A SUBTRAÇÃO DAS MATRIZES
             mat3print();
         }else{
             if(sm==2){
-                for(i=0; i<l1; i++){
-                    for(j=0; j<c1; j++){
-                        mat3[i][j] = mat2[i][j] - mat1[i][j];
+                for(i=0; i<mata.l1; i++){
+                    for(j=0; j<mata.c1; j++){
+                        matc.mat3[i][j] = matb.mat2[i][j] - mata.mat1[i][j];
                     }
                 }
                 printf("SUBTRACAO DA FORMA (B - A) RESULTANDO EM C");
@@ -243,20 +278,21 @@ void matsubtracao(){            //FAZ A SUBTRAÇÃO DAS MATRIZES
     }else{
         printf("Nao e possivel realizar a subtracao de matrizes com numero de linhas e colunas diferentes");
     }
-    l3=l1;
-    c3=c1;
+    matc.l3=mata.l1;
+    matc.c3=mata.c1;
 }
 
 void multab(){                  //FAZ A MULTIPLICAÇÃO DE A * B
     float multabresult;
+    int i, j, y;
 
-    for (i=0; i<l1; i++) {
-        for (j=0; j<c2; j++) {
+    for (i=0; i<mata.l1; i++) {
+        for (j=0; j<matb.c2; j++) {
             multabresult=0;
-            for (y=0; y<c1; y++) {
-                multabresult=multabresult+(mat1[i][y]*mat2[y][j]);
+            for (y=0; y<mata.c1; y++) {
+                multabresult=multabresult+(mata.mat1[i][y]*matb.mat2[y][j]);
             }
-            mat3[i][j]= multabresult;
+            matc.mat3[i][j]= multabresult;
         }
     }
     mat1print();
@@ -268,14 +304,15 @@ void multab(){                  //FAZ A MULTIPLICAÇÃO DE A * B
 
 void multba(){                  //FAZ A MULTIPLICAÇÃO DE B * A
     float multbaresult;
+    int i, j, y;
 
-    for (i=0; i<l2; i++) {
-        for (j=0; j<c1; j++) {
+    for (i=0; i<matb.l2; i++) {
+        for (j=0; j<mata.c1; j++) {
             multbaresult=0;
-            for (y=0; y<c2; y++) {
-                multbaresult=multbaresult+(mat2[i][y]*mat1[y][j]);
+            for (y=0; y<matb.c2; y++) {
+                multbaresult=multbaresult+(matb.mat2[i][y]*mata.mat1[y][j]);
             }
-            mat3[i][j]= multbaresult;
+            matc.mat3[i][j]= multbaresult;
         }
     }
 
@@ -295,17 +332,19 @@ void matmultiplicacao(){        //ANALIZA AS MATRIZES A E B, EM SEGUIDA DETERMIN
      DIFERENTE DO NUMERO DE COLUNAS DE A O PROGRAMA FAZ A MULTIPLICAÇÃO B*A DE FORMA DIRETA
      3º CASO - CASO AS MATRIZES SEJAM AMBAS QUADRADAS COM NUMEROS DE LINHAS E COLUNAS IGUAIS OFERECE AO USUARIO
     A OPÇÃO DE FAZER A MULTIPLICAÇÃO A*B OU B*A */
-    if((l1==c2)||(c1==l2)){
-        if((c1==l2)&&(c2!=l1)){
+    int mm;
+
+    if((mata.l1==matb.c2)||(mata.c1==matb.l2)){
+        if((mata.c1==matb.l2)&&(matb.c2!=mata.l1)){
             printf("Com as especificacoes de A e B so eh possivel realizar uma multiplicacao do formato C = A * B\n\n");
-            l3=l1;
-            c3=c2;
+            matc.l3=mata.l1;
+            matc.c3=matb.c2;
             multab();
         }else{
-            if((c1!=l2)&&(c2==l1)){
+            if((mata.c1!=matb.l2)&&(matb.c2==mata.l1)){
                 printf("Com as especificacoes de A e B so eh possivel realizar uma multiplicação do formato C = B * A\n\n");
-                l3=l2;
-                c3=c1;
+                matc.l3=matb.l2;
+                matc.c3=mata.c1;
                 multba();
             }else{
                 printf("De qual forma voce deseja realizar a multiplicacao?\n"
@@ -313,14 +352,14 @@ void matmultiplicacao(){        //ANALIZA AS MATRIZES A E B, EM SEGUIDA DETERMIN
                        "> 2 - B * A\n");
                 scanf("%d", &mm);
                 if(mm==1){
-                    l3=l1;
-                    c3=c2;
+                    matc.l3=mata.l1;
+                    matc.c3=matb.c2;
                     printf("\n\n");
                     multab();
                 }else{
                     if(mm==2){
-                        l3=l2;
-                        c3=c1;
+                        matc.l3=matb.l2;
+                        matc.c3=mata.c1;
                         printf("\n\n");
                         multba();
                     }else{
@@ -339,6 +378,7 @@ void matmultiplicacao(){        //ANALIZA AS MATRIZES A E B, EM SEGUIDA DETERMIN
 }
 
 int main(void){                 //PROGRAMA PARA O GERENCIAMENTO DAS FUNÇÕES
+    int opt;
     do{
         menu();
         scanf("%d", &opt);
@@ -346,26 +386,26 @@ int main(void){                 //PROGRAMA PARA O GERENCIAMENTO DAS FUNÇÕES
             case 1:
                 system("cls");                  //LIMPA A TELA
                 matclear();                     //EXECUTA A FUNÇÃO MATCLEAR
-                mat1check = mat2check = 0;      //ATRIBUE VALOR ZERO A VARIAVEL INTEIRA MAT1CHECK E MAT2CHECK
+                mata.mat1check = matb.mat2check = 0;      //ATRIBUE VALOR ZERO A VARIAVEL INTEIRA mata.mat1check E matb.mat2check
                 getch();                        //COMANDO PARA VOLTAR AO MENU PRINCIPAL
                 break;
             case 2:
                 system("cls");                  //LIMPA A TELA
                 mat1parameters();               //EXECUTA A FUNÇÃO MAT1PARAMETERS
-                mat1check = 1;                  //ATRIBUE VALOR 1 A VARIAVEL INTEIRA MAT1CHECK
+                mata.mat1check = 1;                  //ATRIBUE VALOR 1 A VARIAVEL INTEIRA mata.mat1check
                 printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
                 getch();                        //COMANDO PARA VOLTAR AO MENU PRINCIPAL
                 break;
             case 3:
                 system("cls");                  //LIMPA A TERA
                 mat2parameters();               //EXECUTA A FUNÇÃO MAT2PARAMETERS
-                mat2check = 1;                  //ATRIBUE VALOR 1 A VARIAVEL INTEIRA MAT2CHECK
+                matb.mat2check = 1;                  //ATRIBUE VALOR 1 A VARIAVEL INTEIRA matb.mat2check
                 printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
                 getch();                        //COMANDO PARA VOLTAR AO MENU PRINCIPAL
                 break;
             case 4:
                 system("cls");                  //LIMPA A TERA
-                if((mat1check!=1)||(mat2check!=1)){         //SE AS VARIAVEIS MAT1CHECK OU MAT2CHECK FOREM DIFERENTES DE 1 MOSTRA UMA MENSAGEM DE INSTRUÇÃO
+                if((mata.mat1check!=1)||(matb.mat2check!=1)){         //SE AS VARIAVEIS mata.mat1check OU matb.mat2check FOREM DIFERENTES DE 1 MOSTRA UMA MENSAGEM DE INSTRUÇÃO
                     printf("Preencha as matrizes A e B antes de realizar uma operacao");
                     printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
                 }else{                                      //SE AMBAS FOREM IGUAIS A 1 REALIZA A FUNÇÃO MATSOMA
@@ -375,7 +415,7 @@ int main(void){                 //PROGRAMA PARA O GERENCIAMENTO DAS FUNÇÕES
                 break;
             case 5:
                 system("cls");                  //LIMPA A TERA
-                if((mat1check!=1)||(mat2check!=1)){         //SE AS VARIAVEIS MAT1CHECK OU MAT2CHECK FOREM DIFERENTES DE 1 MOSTRA UMA MENSAGEM DE INSTRUÇÃO
+                if((mata.mat1check!=1)||(matb.mat2check!=1)){         //SE AS VARIAVEIS mata.mat1check OU matb.mat2check FOREM DIFERENTES DE 1 MOSTRA UMA MENSAGEM DE INSTRUÇÃO
                     printf("Preencha as matrizes A e B antes de realizar uma operacao");
                     printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
                 }else{                                      //SE AMBAS FOREM IGUAIS A 1 REALIZA A FUNÇÃO MATSUBTRACAO
@@ -385,7 +425,7 @@ int main(void){                 //PROGRAMA PARA O GERENCIAMENTO DAS FUNÇÕES
                 break;
             case 6:
                 system("cls");                  //LIMPA A TERA
-                if((mat1check!=1)||(mat2check!=1)){         //SE AS VARIAVEIS MAT1CHECK OU MAT2CHECK FOREM DIFERENTES DE 1 MOSTRA UMA MENSAGEM DE INSTRUÇÃO
+                if((mata.mat1check!=1)||(matb.mat2check!=1)){         //SE AS VARIAVEIS mata.mat1check OU matb.mat2check FOREM DIFERENTES DE 1 MOSTRA UMA MENSAGEM DE INSTRUÇÃO
                     printf("Preencha as matrizes A e B antes de realizar uma operacao");
                 }else{                                      //SE AMBAS FOREM IGUAIS A 1 REALIZA A FUNÇÃO MATMULTIPLICACAO
                 matmultiplicacao();             //EXECUTA A FUNCAO MATMULTIPLICAÇÃO
