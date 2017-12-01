@@ -5,7 +5,8 @@
 # PROGRAMA MANIPULADOR DE MATRIZES
 * O programa recebe dados de matrizes e faz soma, subtração e multiplicação entre elas da forma que o usuário escolher
 # INSTALAÇÃO
-* Pegue o código em C e execute-o em um compilador em C de sua preferencia
+* Opção 01 - Baixe o arquivo, execute o arquivo U3Project.exe
+* Opção 02 - Pegue o código em C e execute-o em um compilador em C de sua preferencia
 # INSTRUÇÕES DE USO
 ## 1 - A opção [01] do programa atribuirá o valor zero a todas as células das matrizes A, B e C.
 ## 2 - Definir os parametros das Matrizez:
