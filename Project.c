@@ -45,7 +45,10 @@ void menu(){                    //ESTRUTURA BASICA DO MENU DO PROGRAMA
            "> 4 - Soma          \n"
            "> 5 - Subtracao     \n"
            "> 6 - Multiplicacao \n"
-           "> 7 - Sair do programa\n\n");
+           "> 7 - Mostrar matriz A\n"
+           "> 8 - Mostrar matriz B\n"
+           "> 9 - Mostrar matriz C\n"
+           "> 10 - Sair do programa\n\n");
     printf("Digite a operacao que voce deseja realizar  > ");
 }
 
@@ -431,8 +434,27 @@ int main(void){                 //PROGRAMA PARA O GERENCIAMENTO DAS FUNÇÕES
                 matmultiplicacao();             //EXECUTA A FUNCAO MATMULTIPLICAÇÃO
                 }
                 printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
-                getch();                        //COMANDO PARA VOLTAR AO MENU PRINCIPAL
+                getch();                       //COMANDO PARA VOLTAR AO MENU PRINCIPAL
+                break;
             case 7:
+                system("cls");
+                mat1print();
+                printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
+                getch();
+                break;
+            case 8:
+                system("cls");
+                mat2print();
+                printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
+                getch();
+                break;
+            case 9:
+                system("cls");
+                mat3print();
+                printf("\n\nPressione uma tecla qualquer para voltar ao menu principal");
+                getch();
+                break;
+            case 10:
                 system("cls");                  //LIMPA A TELA
                 printf("Voce saiu do programa!\n\n\n");
                 break;
@@ -443,5 +465,5 @@ int main(void){                 //PROGRAMA PARA O GERENCIAMENTO DAS FUNÇÕES
                 getch();
                 break;
         }
-    }while(opt!=7);
+    }while(opt!=10);
 }
